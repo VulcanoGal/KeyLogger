@@ -39,7 +39,7 @@ def main():
         new_hook.cancel()
         pass
     except Exception as problema:
-        txt = f"Error while catching events:\n {problema}"
+        txt = f"Problema al reconocer el caracter:\n {problema}"
         with open(archivo_log, "a") as x:
             x.write(f"\n{txt}")
 
